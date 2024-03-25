@@ -3,5 +3,90 @@
 {% block title %} Title for index {% endblock %}
 
 {% block content %} 
-<h1> Hello to Ebook gjiogjiuguig </h1>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        .weather-container {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .location {
+            margin-bottom: 20px;
+        }
+
+        .weather h2 {
+            margin: 10px 0;
+        }
+
+        .weather h3 {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Weather Webpage</h1>
+        <div class="weather-container">
+       
+            </div>
+            <div class="weather">
+             
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Replace 'YOUR_API_KEY' with your actual API key from OpenWeatherMap
+        const apiKey = 'YOUR_API_KEY';
+        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=London&appid=${apiKey}&units=metric`;
+
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                const city = data.name;
+                const country = data.sys.country;
+                const temperature = Math.round(data.main.temp);
+                const description = data.weather[0].description;
+
+                document.getElementById('city').textContent = city;
+                document.getElementById('country').textContent = country;
+                document.getElementById('temperature').textContent = `${temperature}°C`;
+                document.getElementById('description').textContent = description;
+            })
+            .catch(error => {
+                console.error('There was a problem fetching the weather data:', error);
+                document.getElementById('city').textContent = 'Error';
+                document.getElementById('description').textContent = 'Failed to fetch data';
+            });
+    </script>
+</body>
+</html>
+
 {% endblock %}
